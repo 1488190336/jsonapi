@@ -48,10 +48,13 @@ export async function recurseRelators(
 
     for (const [relator, cache] of curRelatorDataCache) {
       for (let i = 0; i < cache.length; i++) {
-        const shouldBuildRelatedCache: boolean =
-          (!includeFields ||
-            includeFields?.filter((i) => i.field === relator.relatedName)?.[i]?.hasMore) ??
-          false;
+        // const shouldBuildRelatedCache: boolean =
+        //   (!includeFields ||
+        //     includeFields?.filter((i) => i.field === relator.relatedName)?.[i]?.hasMore) ??
+        //   false;
+
+        const shouldBuildRelatedCache: boolean = true;
+        
         const resource = await relator.getRelatedResource(
           cache[i],
           undefined,
@@ -59,6 +62,8 @@ export async function recurseRelators(
           // Only build the cache for the nexty iteration if needed.
           shouldBuildRelatedCache ? newRelatorDataCache : undefined
         );
+
+        // console.log({ resource });
 
         // Include if,
         // - includeFields == undefined
